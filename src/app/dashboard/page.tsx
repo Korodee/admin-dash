@@ -1,3 +1,4 @@
+"use client";
 import PrivateLayout from "@/components/AuthorizedRoute";
 import Analytics from "@/app/dashboard/analytics";
 import RecentTransactionTable from "./recentTransactionsTable";
@@ -10,8 +11,6 @@ const Dashboard = () => {
                     <p className="text-xl font-medium text-[#78726D] mb-6">
                         Analytics
                     </p>
-                    <p>{process.env.NEXT_PUBLIC_BACKEND_BASE_URL ?? ""}</p>
-
                     <Analytics />
                 </div>
 

@@ -226,8 +226,8 @@ const SingleTransactionDetails = ({
                                             Student Name
                                         </p>
                                         <p className="text-[#180C02] font-medium">
-                                            {transactionData.user.firstName}{" "}
-                                            {transactionData.user.lastName}
+                                            {transactionData?.user?.firstName}{" "}
+                                            {transactionData?.user?.lastName}
                                         </p>
                                     </div>}
             </div>

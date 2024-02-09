@@ -15,7 +15,7 @@ const SingleTransactionDetails = ({
     params: { single: string };
 }) => {
     const router = useRouter();
-    const { data: transactionData, isPending } = useQuery({
+    const { data: transactionData, isLoading } = useQuery({
         queryKey: ["singleTransaction"],
         queryFn: async () => {
             const res = await authAxios.get(`/transaction/${params.single}`);
@@ -218,8 +218,18 @@ const SingleTransactionDetails = ({
                         </div>
                     </div>
                 ) : (
-                    <>{isPending ? <Spinner /> : null}</>
+                    <>{isLoading ? <Spinner /> : null}</>
                 )}
+
+                {isLoading ? <Spinner /> :   <div className="flex justify-between px-4 py-6">
+                                        <p className="text-[#C6C5C4] text-[14px]">
+                                            Student Name
+                                        </p>
+                                        <p className="text-[#180C02] font-medium">
+                                            {transactionData.user.firstName}{" "}
+                                            {transactionData.user.lastName}
+                                        </p>
+                                    </div>}
             </div>
         </PrivateLayout>
     );

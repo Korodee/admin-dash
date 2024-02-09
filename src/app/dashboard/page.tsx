@@ -1,4 +1,3 @@
-"use client";
 import PrivateLayout from "@/components/AuthorizedRoute";
 import Analytics from "@/app/dashboard/analytics";
 import RecentTransactionTable from "./recentTransactionsTable";

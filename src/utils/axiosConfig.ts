@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 
-const authAxios = axios.create({
+export const authAxios = axios.create({
     baseURL: process.env.NEXT_PUBLIC_BACKEND_BASE_URL,
 });
 
@@ -27,5 +27,3 @@ authAxios.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
-export default authAxios;

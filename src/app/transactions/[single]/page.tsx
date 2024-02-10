@@ -17,9 +17,13 @@ const SingleTransactionDetails = ({
     const [transactionData, setTransactionData] =
         useState<SingleTransactionResponse | null>(null);
     const [isPending, setPending] = useState(false);
-    const fetchData = async () => {
+     const fetchData = async () => {
         setPending(true);
-        const res = await authAxios.get(`/transaction/${params.single}`);
+        const res = await authAxios.get(`/transaction/${params.single}`, {
+            headers: {
+                "access-control-allow-origin": "*",
+            },
+        });
         setTransactionData(res.data.data);
         setPending(false);
     };

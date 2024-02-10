@@ -14,13 +14,15 @@ const SingleTransactionDetails = ({
     params: { single: string };
 }) => {
     const router = useRouter();
-    const [transactionData, setTransactionData] =
-        useState<SingleTransactionResponse | null>(null);
+const [transactionData, setTransactionData] = useState<any>(null);
     const [isPending, setPending] = useState(false);
     const fetchData = async () => {
         setPending(true);
-        const res = await authAxios.get(`/transaction/${params.single}`);
-        setTransactionData(res.data.data);
+        const res = await fetch(
+            `https://staging.api.endowd.africa/api/v1/transaction/${params.single}`
+        );
+        setTransactionData(res.json());
+        console.log(res);
         setPending(false);
     };
     useEffect(() => {

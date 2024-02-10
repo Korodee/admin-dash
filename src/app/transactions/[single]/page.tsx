@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { SingleTransactionResponse } from "@/interfaces/transactions";
 import Spinner from "@/components/Spinner";
-import authAxios from "@/utils/axiosConfig";
+import {authAxios} from "@/utils/axiosConfig";
 const SingleTransactionDetails = ({
     params,
 }: {

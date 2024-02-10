@@ -3,9 +3,8 @@ import PrivateLayout from "@/components/AuthorizedRoute";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import PaymentIcon from "../../../assets/svg/security.svg";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useQuery } from "@tanstack/react-query";
 import { authAxios } from "@/utils/axiosConfig";
 import { SingleTransactionResponse } from "@/interfaces/transactions";
 import Spinner from "@/components/Spinner";
@@ -15,13 +14,18 @@ const SingleTransactionDetails = ({
     params: { single: string };
 }) => {
     const router = useRouter();
-    const { data: transactionData, isLoading } = useQuery({
-        queryKey: ["singleTransaction"],
-        queryFn: async () => {
-            const res = await authAxios.get(`/transaction/${params.single}`);
-            return res.data.data as SingleTransactionResponse;
-        },
-    });
+    const [transactionData, setTransactionData] =
+        useState<SingleTransactionResponse | null>(null);
+    const [isPending, setPending] = useState(false);
+    const fetchData = async () => {
+        setPending(true);
+        const res = await authAxios.get(`/transaction/${params.single}`);
+        setTransactionData(res.data.data);
+        setPending(false);
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
     return (
         <PrivateLayout>
             <div className="bg-white rounded-[14px] p-6">
@@ -218,18 +222,8 @@ const SingleTransactionDetails = ({
                         </div>
                     </div>
                 ) : (
-                    <>{isLoading ? <Spinner /> : null}</>
+                    <>{isPending ? <Spinner /> : null}</>
                 )}
-
-                {isLoading ? <Spinner /> :   <div className="flex justify-between px-4 py-6">
-                                        <p className="text-[#C6C5C4] text-[14px]">
-                                            Student Name
-                                        </p>
-                                        <p className="text-[#180C02] font-medium">
-                                            {transactionData?.user?.firstName}{" "}
-                                            {transactionData?.user?.lastName}
-                                        </p>
-                                    </div>}
             </div>
         </PrivateLayout>
     );

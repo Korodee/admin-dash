@@ -5,24 +5,22 @@ import PaymentIcon from "../../../assets/svg/security.svg";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { authAxios } from "@/utils/axiosConfig";
 import { SingleTransactionResponse } from "@/interfaces/transactions";
 import Spinner from "@/components/Spinner";
+import authAxios from "@/utils/axiosConfig";
 const SingleTransactionDetails = ({
     params,
 }: {
     params: { single: string };
 }) => {
     const router = useRouter();
-const [transactionData, setTransactionData] = useState<any>(null);
+    const [transactionData, setTransactionData] =
+        useState<SingleTransactionResponse | null>(null);
     const [isPending, setPending] = useState(false);
     const fetchData = async () => {
         setPending(true);
-        const res = await fetch(
-            `https://staging.api.endowd.africa/api/v1/transaction/${params.single}`
-        );
-        setTransactionData(res.json());
-        console.log(res);
+        const res = await authAxios.get(`/transaction/${params.single}`);
+        setTransactionData(res.data.data);
         setPending(false);
     };
     useEffect(() => {
